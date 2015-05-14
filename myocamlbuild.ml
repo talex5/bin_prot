@@ -628,7 +628,8 @@ let dispatch = function
     let system = BaseEnvLight.var_get "system" env in
     let cc = BaseEnvLight.var_get "bytecomp_c_compiler" env in
     let is_darwin = String.is_prefix "macos" system in
-    let arch_sixtyfour = BaseEnvLight.var_get "arch_sixtyfour" env = "true" in
+    (* The 64-bit optimisations break js_of_ocaml *)
+    let arch_sixtyfour = false (* BaseEnvLight.var_get "arch_sixtyfour" env = "true" *) in
 
     let cpp = cc ^ " -E -xc -undef -w" in
     let cpp = if arch_sixtyfour then cpp ^ " -DARCH_SIXTYFOUR" else cpp in
