@@ -22,6 +22,10 @@ XStdFilesREADME:  false
 PostConfCommand: config/arch.sh $ocamlc
 PreBuildCommand: mkdir -p _build; cp lib/*.mlh _build/
 
+Flag xen
+  Description:        Build Xen support
+  Default:            false
+
 Library bin_prot
   Path:               lib
   Pack:               true
@@ -36,6 +40,15 @@ Library bin_prot
                       Utils
   CSources:           blit_stubs.c
   BuildDepends:       unix,bigarray
+  XMETAExtraLines:    xen_linkopts = "-lbin_prot_xen_stubs"
+
+Library bin_prot_xen
+  Build$:             flag(xen)
+  Path:               lib
+  CSources:           blit_stubs_xen.c
+  Findlibparent:      bin_prot
+  Findlibname:        xen
+  CCOpt:              -O2 $XEN_CFLAGS
 
 Library pa_bin_prot
   Path:               syntax

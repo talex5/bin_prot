@@ -7,6 +7,10 @@
 #include <caml/bigarray.h>
 #include <caml/signals.h>
 
+#ifdef __MINIOS__
+#include <mini-os/compiler.h>
+#endif
+
 #if defined(__GNUC__) && __GNUC__ >= 3
 # ifndef __likely
 #   define likely(x) __builtin_expect (!!(x), 1)

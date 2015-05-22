@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: 1fa6101743df7d2918bc961eee40a73b)
+# DO NOT EDIT (digest: 30ff2ae533d60f957036951da11dff5b)
 version = "111.03.00"
 description = "bin_prot - binary protocol generator"
 requires = "unix bigarray"
@@ -7,17 +7,26 @@ archive(byte) = "bin_prot.cma"
 archive(byte, plugin) = "bin_prot.cma"
 archive(native) = "bin_prot.cmxa"
 archive(native, plugin) = "bin_prot.cmxs"
+xen_linkopts = "-lbin_prot_xen_stubs"
 exists_if = "bin_prot.cma"
+package "xen" (
+ version = "111.03.00"
+ description = "bin_prot - binary protocol generator"
+ archive(byte) = "bin_prot_xen.cma"
+ archive(byte, plugin) = "bin_prot_xen.cma"
+ archive(native) = "bin_prot_xen.cmxa"
+ archive(native, plugin) = "bin_prot_xen.cmxs"
+ exists_if = "bin_prot_xen.cma"
+)
+
 package "syntax" (
  version = "111.03.00"
  description = "Syntax extension for binary protocol generator"
  requires = "camlp4 type_conv bin_prot"
  archive(syntax, preprocessor) = "pa_bin_prot.cma"
  archive(syntax, toploop) = "pa_bin_prot.cma"
- archive(syntax, byte) = "pa_bin_prot.cma"
- archive(syntax, byte, plugin) = "pa_bin_prot.cma"
- archive(syntax, native) = "pa_bin_prot.cmxa"
- archive(syntax, native, plugin) = "pa_bin_prot.cmxs"
+ archive(syntax, preprocessor, native) = "pa_bin_prot.cmxa"
+ archive(syntax, preprocessor, native, plugin) = "pa_bin_prot.cmxs"
  exists_if = "pa_bin_prot.cma"
 )
 # OASIS_STOP
