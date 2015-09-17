@@ -23,3 +23,5 @@ fi
 cat >> setup.data <<EOF
 arch_sixtyfour="$arch_sixtyfour"
 EOF
+
+ocaml postconf.ml
