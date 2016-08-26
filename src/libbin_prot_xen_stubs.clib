@@ -1,0 +1,5 @@
+# OASIS_START
+# DO NOT EDIT (digest: 810276af472c6ae086d1de5e77e0b039)
+blit_stubs_xen.o
+float_stubs_xen.o
+# OASIS_STOP

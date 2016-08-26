@@ -8,4 +8,64 @@
 <src/*.ml{,i}>: pp_deps_for_src
 <src/{size,write,read,type_class}.ml{i,}>:cpp
 # OASIS_START
+# DO NOT EDIT (digest: a23e6186dac48bb6578e97b7ee2ea3cb)
+# Ignore VCS directories, you can use the same kind of rule outside
+# OASIS_START/STOP if you want to exclude directories that contains
+# useless stuff for the build process
+true: annot, bin_annot
+<**/.svn>: -traverse
+<**/.svn>: not_hygienic
+".bzr": -traverse
+".bzr": not_hygienic
+".hg": -traverse
+".hg": not_hygienic
+".git": -traverse
+".git": not_hygienic
+"_darcs": -traverse
+"_darcs": not_hygienic
+# Library bin_shape_lib
+"shape/src/bin_shape_lib.cmxs": use_bin_shape_lib
+"shape/src/bin_shape.cmx": for-pack(Bin_shape_lib)
+"shape/src/core_fragment.cmx": for-pack(Bin_shape_lib)
+"shape/src/std.cmx": for-pack(Bin_shape_lib)
+<shape/src/*.ml{,i,y}>: package(fieldslib)
+<shape/src/*.ml{,i,y}>: package(sexplib)
+<shape/src/*.ml{,i,y}>: package(variantslib)
+# Library bin_prot
+"src/bin_prot.cmxs": use_bin_prot
+"src/binable.cmx": for-pack(Bin_prot)
+"src/blob.cmx": for-pack(Bin_prot)
+"src/common.cmx": for-pack(Bin_prot)
+"src/nat0.cmx": for-pack(Bin_prot)
+"src/read.cmx": for-pack(Bin_prot)
+"src/shape.cmx": for-pack(Bin_prot)
+"src/size.cmx": for-pack(Bin_prot)
+"src/std.cmx": for-pack(Bin_prot)
+"src/type_class.cmx": for-pack(Bin_prot)
+"src/utils.cmx": for-pack(Bin_prot)
+"src/write.cmx": for-pack(Bin_prot)
+<src/bin_prot.{cma,cmxa}>: use_libbin_prot_stubs
+<src/*.ml{,i,y}>: package(fieldslib)
+<src/*.ml{,i,y}>: package(sexplib)
+<src/*.ml{,i,y}>: package(variantslib)
+<src/*.ml{,i,y}>: use_bin_shape_lib
+"src/blit_stubs.c": package(bigarray)
+"src/blit_stubs.c": package(fieldslib)
+"src/blit_stubs.c": package(sexplib)
+"src/blit_stubs.c": package(variantslib)
+"src/blit_stubs.c": use_bin_shape_lib
+"src/float_stubs.c": package(bigarray)
+"src/float_stubs.c": package(fieldslib)
+"src/float_stubs.c": package(sexplib)
+"src/float_stubs.c": package(variantslib)
+"src/float_stubs.c": use_bin_shape_lib
+# Library bin_prot_xen
+"src/bin_prot_xen.cmxs": use_bin_prot_xen
+<src/*.ml{,i,y}>: oasis_library_bin_prot_xen_ccopt
+"src/blit_stubs_xen.c": oasis_library_bin_prot_xen_ccopt
+"src/float_stubs_xen.c": oasis_library_bin_prot_xen_ccopt
+<src/bin_prot_xen.{cma,cmxa}>: use_libbin_prot_xen_stubs
+<src/*.ml{,i,y}>: package(bigarray)
+"src/blit_stubs_xen.c": package(bigarray)
+"src/float_stubs_xen.c": package(bigarray)
 # OASIS_STOP
