@@ -1,5 +1,5 @@
 (* OASIS_START *)
-(* DO NOT EDIT (digest: 4a5a1067ef247eabdb74fe9828ef0cff) *)
+(* DO NOT EDIT (digest: 98b27de65690355db4d341a92a757fda) *)
 module OASISGettext = struct
 (* # 22 "src/oasis/OASISGettext.ml" *)
 
@@ -768,11 +768,7 @@ open Ocamlbuild_plugin;;
 let package_default =
   {
      MyOCamlbuildBase.lib_ocaml =
-       [
-          ("bin_shape_lib", ["shape/src"], []);
-          ("bin_prot", ["src"], []);
-          ("bin_prot_xen", ["src"], [])
-       ];
+       [("bin_prot", ["src"], []); ("bin_prot_xen", ["src"], [])];
      lib_c =
        [
           ("bin_prot", "src", ["src/config.h"]);
@@ -786,7 +782,7 @@ let package_default =
                  S [A "-ccopt"; A "-O2"; A "-ccopt"; A "${XEN_CFLAGS}"])
             ])
        ];
-     includes = [("src", ["shape/src"])]
+     includes = []
   }
   ;;
 
@@ -794,7 +790,7 @@ let conf = {MyOCamlbuildFindlib.no_automatic_syntax = false}
 
 let dispatch_default = MyOCamlbuildBase.dispatch_default conf package_default;;
 
-# 798 "myocamlbuild.ml"
+# 794 "myocamlbuild.ml"
 (* OASIS_STOP *)
 
 module JS = Jane_street_ocamlbuild_goodies

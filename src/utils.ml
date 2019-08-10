@@ -70,8 +70,6 @@ end
 module Make_binable (S : Make_binable_spec) = struct
   module B = S.Binable
 
-  let bin_shape_t = B.bin_shape_t
-
   let bin_size_t t = B.bin_size_t (S.to_binable t)
   let bin_write_t buf ~pos t = B.bin_write_t buf ~pos (S.to_binable t)
   let bin_read_t buf ~pos_ref = S.of_binable (B.bin_read_t buf ~pos_ref)
@@ -93,7 +91,6 @@ module Make_binable (S : Make_binable_spec) = struct
 
   let bin_t =
     {
-      shape = bin_shape_t;
       writer = bin_writer_t;
       reader = bin_reader_t;
     }
@@ -110,8 +107,6 @@ end
 
 module Make_binable1 (S : Make_binable1_spec) = struct
   module B = S.Binable
-
-  let bin_shape_t bin_shape_el = B.bin_shape_t bin_shape_el
 
   let bin_size_t bin_size_el t = B.bin_size_t bin_size_el (S.to_binable t)
 
@@ -143,7 +138,6 @@ module Make_binable1 (S : Make_binable1_spec) = struct
 
   let bin_t type_class =
     {
-      shape = bin_shape_t type_class.shape;
       writer = bin_writer_t type_class.writer;
       reader = bin_reader_t type_class.reader;
     }
@@ -160,9 +154,6 @@ end
 
 module Make_binable2 (S : Make_binable2_spec) = struct
   module B = S.Binable
-
-  let bin_shape_t bin_shape_el1 bin_shape_el2 =
-    B.bin_shape_t bin_shape_el1 bin_shape_el2
 
   let bin_size_t bin_size_el1 bin_size_el2 t =
     B.bin_size_t bin_size_el1 bin_size_el2 (S.to_binable t)
@@ -197,7 +188,6 @@ module Make_binable2 (S : Make_binable2_spec) = struct
 
   let bin_t type_class1 type_class2 =
     {
-      shape = bin_shape_t type_class1.shape type_class2.shape;
       writer = bin_writer_t type_class1.writer type_class2.writer;
       reader = bin_reader_t type_class1.reader type_class2.reader;
     }
@@ -207,7 +197,6 @@ module type Make_iterable_binable_spec = sig
   type t
   type el
 
-  val caller_identity : Shape.Uuid.t
   val module_name : string option
   val length : t -> int
   val iter : t -> f : (el -> unit) -> unit
@@ -215,7 +204,6 @@ module type Make_iterable_binable_spec = sig
   val bin_size_el : el Size.sizer
   val bin_write_el : el Write.writer
   val bin_read_el : el Read.reader
-  val bin_shape_el : Shape.t
 end
 
 let with_module_name f ~module_name function_name =
@@ -236,10 +224,6 @@ let raise_read_not_enough =
 
 module Make_iterable_binable (S : Make_iterable_binable_spec) = struct
   open S
-
-  let bin_shape_t =
-    Shape.(basetype caller_identity [
-      basetype (Uuid.of_string "6592371a-4994-11e6-923a-7748e4182764") [S.bin_shape_el]])
 
   let bin_size_t t =
     let size_ref = ref 0 in
@@ -294,7 +278,6 @@ module Make_iterable_binable (S : Make_iterable_binable_spec) = struct
 
   let bin_t =
     {
-      shape = bin_shape_t;
       writer = bin_writer_t;
       reader = bin_reader_t;
     }
@@ -304,7 +287,6 @@ module type Make_iterable_binable1_spec = sig
   type 'a t
   type 'a el
 
-  val caller_identity : Shape.Uuid.t
   val module_name : string option
   val length : 'a t -> int
   val iter : 'a t -> f : ('a el -> unit) -> unit
@@ -312,17 +294,12 @@ module type Make_iterable_binable1_spec = sig
   val bin_size_el : ('a, 'a el) Size.sizer1
   val bin_write_el : ('a, 'a el) Write.writer1
   val bin_read_el : ('a, 'a el) Read.reader1
-  val bin_shape_el : Shape.t -> Shape.t
 end
 
 
 
 module Make_iterable_binable1 (S : Make_iterable_binable1_spec) = struct
   open S
-
-  let bin_shape_t t =
-    Shape.(basetype caller_identity [
-      basetype (Uuid.of_string "ac8a9ff4-4994-11e6-9a1b-9fb4e933bd9d") [S.bin_shape_el t]])
 
   let bin_size_t bin_size_a t =
     let size_ref = ref 0 in
@@ -381,7 +358,6 @@ module Make_iterable_binable1 (S : Make_iterable_binable1_spec) = struct
 
   let bin_t type_class =
     {
-      shape = bin_shape_t type_class.shape;
       writer = bin_writer_t type_class.writer;
       reader = bin_reader_t type_class.reader;
     }
@@ -392,7 +368,6 @@ module type Make_iterable_binable2_spec = sig
   type ('a, 'b) t
   type ('a, 'b) el
 
-  val caller_identity : Shape.Uuid.t
   val module_name : string option
 
   val length : ('a, 'b) t -> int
@@ -402,15 +377,10 @@ module type Make_iterable_binable2_spec = sig
   val bin_size_el : ('a, 'b, ('a, 'b) el) Size.sizer2
   val bin_write_el : ('a, 'b, ('a, 'b) el) Write.writer2
   val bin_read_el : ('a, 'b, ('a, 'b) el) Read.reader2
-  val bin_shape_el : Shape.t -> Shape.t -> Shape.t
 end
 
 module Make_iterable_binable2 (S : Make_iterable_binable2_spec) = struct
   open S
-
-  let bin_shape_t t1 t2 =
-    Shape.(basetype caller_identity [
-      basetype (Uuid.of_string "b4e54ad2-4994-11e6-b8df-87c2997f9f52") [S.bin_shape_el t1 t2]])
 
   let bin_size_t bin_size_a bin_size_b t =
     let size_ref = ref 0 in
@@ -469,7 +439,6 @@ module Make_iterable_binable2 (S : Make_iterable_binable2_spec) = struct
 
   let bin_t type_class1 type_class2 =
     {
-      shape = bin_shape_t type_class1.shape type_class2.shape;
       writer = bin_writer_t type_class1.writer type_class2.writer;
       reader = bin_reader_t type_class1.reader type_class2.reader;
     }

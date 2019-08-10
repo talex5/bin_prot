@@ -49,4 +49,3 @@ val bin_read_network32_int : int reader
 val bin_read_network32_int32 : int32 reader
 val bin_read_network64_int : int reader
 val bin_read_network64_int64 : int64 reader
-val bin_read_digest : Shape.Digest.t reader

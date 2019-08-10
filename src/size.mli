@@ -48,7 +48,6 @@ val bin_size_network64_int64 : int64 sizer
 val bin_size_array_no_length : ('a, 'a array) sizer1
   [@@deprecated
     "[since 2016-03] this function was deprecated as it is misleading and unused"]
-val bin_size_digest : Shape.Digest.t sizer
 
 (* Provide the maximum sizes for fields which do not depend upon an array/vector/matrix
    length, choosing the size required for the largest architecture.  This allows for the

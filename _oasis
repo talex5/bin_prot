@@ -39,27 +39,15 @@ Library bin_prot
                 Common,
                 Nat0,
                 Read,
-                Shape,
                 Size,
                 Std,
                 Type_class,
                 Utils,
                 Write
-  BuildDepends: bigarray,
-                bin_shape_lib
+  BuildDepends: bigarray
   CSources:     blit_stubs.c,
                 config.h,
                 float_stubs.c
-
-Library bin_shape_lib
-  Path:         shape/src
-  Pack:         true
-  Modules:      Bin_shape,
-                Core_fragment,
-                Std
-  BuildDepends: fieldslib,
-                sexplib,
-                variantslib
 
 Library bin_prot_xen
   Build$:             flag(xen)
